@@ -78,9 +78,9 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   VectorXd y = z - H_xprime;
   float div360 = y(1)/(2*M_PI);
   if ( div360 > 0.5 ){
-    y(1) = y(1) - div360*2*M_PI;
+    y(1) = y(1) - int(div360+0.5)*2*M_PI;
   }else if ( div360 < -0.5 ){
-    y(1) = y(1) + div360*2*M_PI;
+    y(1) = y(1) + int(div360-0.5)*2*M_PI;
   }
   MatrixXd Ht = H_.transpose();
   MatrixXd S = H_ * P_ * Ht + R_;
